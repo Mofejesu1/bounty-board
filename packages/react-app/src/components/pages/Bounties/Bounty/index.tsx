@@ -9,6 +9,7 @@ import {
 	Grid,
 	GridItem,
 	Heading,
+	HStack,
 	Tag,
 	TagLabel,
 	Text,
@@ -108,6 +109,14 @@ const BountySummary = ({ bounty }: {bounty: BountyCollection}): JSX.Element => {
 			<Flex width="full" justifyContent="space-between" alignItems="center">
 				<Box mb={2}>
 					{<Status indication={bounty.paidStatus ? bounty.paidStatus : PAID_STATUS.UNPAID} />}
+				</Box>
+			</Flex>
+			<Flex width="full" justifyContent="space-between" alignItems="center">
+				<Box mb={2}>
+					<HStack spacing={2}>
+						{bounty.tags && bounty.tags.map((tag) =>
+							<Status key={tag} indication={tag as string} />)}
+					</HStack>
 				</Box>
 			</Flex>
 		</Flex>

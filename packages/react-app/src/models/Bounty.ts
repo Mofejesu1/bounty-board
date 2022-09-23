@@ -130,6 +130,7 @@ export const BountySchema = object({
 	paidStatus: paidStatus.when('$method', (method, schema) => requiredForPost({ method, schema })),
 	dueAt: string().when('$method', (method, schema) => requiredForPost({ method, schema })),
 	reward: Reward.when('$method', (method, schema) => requiredForPost({ method, schema, isObject: true })),
+	tags: array(string()).when('$method', (method, schema) => requiredForPost({ method, schema })),
 
 	statusHistory: array(StatusHistory).optional(),
 	activityHistory: array(ActivityHistory).optional(),
@@ -259,6 +260,9 @@ export const BountyBoardSchema = new mongoose.Schema({
 		discordId: Number,
 		type: Object,
 	},
+	tags: [{
+		type: String,
+	}],
 });
 
 BountyBoardSchema.plugin(aggregatePlugin);
