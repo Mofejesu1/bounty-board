@@ -25,8 +25,10 @@ import ReactHtmlParser from 'react-html-parser';
 
 type SetState<T extends any> = (arg: T) => void;
 
+const knownIndicators = ['Open', 'In-Review', 'In-Progress', 'Completed', 'Done', 'Deleted', 'Draft', 'primary', 'Paid', 'Unpaid'];
+
 const Status = ({ indication }: { indication: string }): JSX.Element => (
-	<Tag my={0} size="lg" key="lg" variant="outline" colorScheme={indication}>
+	<Tag my={0} size="lg" key="lg" borderRadius={knownIndicators.includes(indication) ? '' : 'full'} variant="outline" colorScheme={knownIndicators.includes(indication) ? indication : 'red'}>
 		<TagLabel>{indication.replace('-', ' ')}</TagLabel>
 	</Tag>
 );
@@ -75,6 +77,13 @@ const calculateReward = (_reward: BountyCollection['reward']): string => {
 
 
 const BountySummary = ({ bounty }: {bounty: BountyCollection}): JSX.Element => {
+	let tags: string[] = [];
+	
+	if (bounty.tags?.channelCategory) {
+		tags = tags.concat(bounty.tags.channelCategory);
+	} if (bounty.tags?.text) {
+		tags = tags.concat(bounty.tags.text);
+	}
 	
 	return (
 		<Flex flexWrap="wrap" width="100%" justifyContent="flex-end" ml="2">
@@ -114,7 +123,7 @@ const BountySummary = ({ bounty }: {bounty: BountyCollection}): JSX.Element => {
 			<Flex width="full" justifyContent="space-between" alignItems="center">
 				<Box mb={2}>
 					<HStack spacing={2}>
-						{bounty.tags && bounty.tags.map((tag) =>
+						{tags.length && tags.map((tag) =>
 							<Status key={tag} indication={tag as string} />)}
 					</HStack>
 				</Box>

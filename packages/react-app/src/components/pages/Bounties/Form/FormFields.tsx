@@ -113,20 +113,18 @@ function BountyFormFields(props: { formProps: UseFormReturn<typeof bountyFormFie
 			</FormControl>
 
 			<FormControl
-				isInvalid={!!errors.tags}
 				{...sharedFormatting}
 			>
 				<FormLabel htmlFor='tags'>Tags</FormLabel>
 				<HelperBox>
-					Give the bounty a tag(s)
+					Give the bounty a good tag(s)
 				</HelperBox>
-				<Textarea
+				<Input
 					id='tags'
 					borderColor={inputBorderColor}
 					placeholder={PLACEHOLDERS.TAGS}
-					{...register('tags', { required })}
+					{...register('tags')}
 				/>
-				<FormErrorMessage>{errors.tags?.message}</FormErrorMessage>
 			</FormControl>
 
 			<FormControl
