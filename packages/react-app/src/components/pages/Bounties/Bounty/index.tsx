@@ -25,10 +25,8 @@ import ReactHtmlParser from 'react-html-parser';
 
 type SetState<T extends any> = (arg: T) => void;
 
-const knownIndicators = ['Open', 'In-Review', 'In-Progress', 'Completed', 'Done', 'Deleted', 'Draft', 'primary', 'Paid', 'Unpaid'];
-
 const Status = ({ indication }: { indication: string }): JSX.Element => (
-	<Tag my={0} size="lg" key="lg" borderRadius={knownIndicators.includes(indication) ? '' : 'full'} variant="outline" colorScheme={knownIndicators.includes(indication) ? indication : 'red'}>
+	<Tag my={0} size="lg" key="lg" variant="outline" colorScheme={indication}>
 		<TagLabel>{indication.replace('-', ' ')}</TagLabel>
 	</Tag>
 );
@@ -124,7 +122,12 @@ const BountySummary = ({ bounty }: {bounty: BountyCollection}): JSX.Element => {
 				<Box mb={2}>
 					<HStack spacing={2}>
 						{tags.length && tags.map((tag) =>
-							<Status key={tag} indication={tag as string} />)}
+							<>
+								<Tag key={tag} size='md' colorScheme='purple' variant='subtle' borderRadius='full'>
+									<TagLabel>{tag.replace('-', ' ')}</TagLabel>
+								</Tag>
+							</>
+						)}
 					</HStack>
 				</Box>
 			</Flex>
